@@ -7,11 +7,11 @@ def dpChange(money, coins):
 
     minNumCoins = []
     minNumCoins += [0]
-    for m in xrange(money):
+    for m in range(money):
         minNumCoins += [0]
-    for m in xrange(1,money+1):
+    for m in range(1,money+1):
         minNumCoins[m] = sys.maxint
-        for i in xrange(len(coins)):
+        for i in range(len(coins)):
             if m >= coins[i]:
                 if minNumCoins[m-coins[i]] + 1 < minNumCoins[m]:
                     minNumCoins[m] = minNumCoins[m-coins[i]]+1
@@ -34,7 +34,7 @@ def dpChangeWrapper(fileName):
     coins[len(coins)-1] = coins[len(coins)-1].rstrip()
     coins = map(int, coins)
     minCoins = dpChange(int(money), coins)
-    print minCoins
+    print(minCoins)
 
 def manhattanTourWrapper(fileName):
 
@@ -67,25 +67,25 @@ def manhattanTourWrapper(fileName):
         currentLine = []
         currentNum = ""
     manhattanTour = manhattanTourist(n,m,downMatrix,rightMatrix)
-    print str(manhattanTour)
+    print(str(manhattanTour))
 
 def manhattanTourist(n,m,down,right):
 
     s = []
-    for i in xrange(n+1):
+    for i in range(n+1):
         s += [[]]
-        for j in xrange(m+1):
+        for j in range(m+1):
             s[i] += [0]
-    print s
-    for i in xrange(1,n+1):
+    print(s)
+    for i in range(1,n+1):
         s[i][0] = s[i-1][0] + down[i-1][0]
-    for j in xrange(1,m+1):
+    for j in range(1,m+1):
         s[0][j] = s[0][j-1] + right[0][j-1]
-    for i in xrange(1,n+1):
-        for j in xrange(1,m+1):
+    for i in range(1,n+1):
+        for j in range(1,m+1):
             s[i][j] = max(s[i-1][j] + down[i-1][j],
                           s[i][j-1] + right[i][j-1])
-    print s
+    print(s)
     return s[n][m]
 
 def outputLCS(backtrack,v,i,j, LCS):
@@ -97,21 +97,21 @@ def outputLCS(backtrack,v,i,j, LCS):
     elif backtrack[i][j] == 2:
         outputLCS(backtrack, v, i, j-1, LCS)
     else:
-        print v[i-1]
+        print(v[i-1])
         return outputLCS(backtrack, v, i-1, j-1, v[i-1] + LCS)     
 
 def LCSBacktrack(v,w):
     
     s = []
     backtrack = []
-    for i in xrange(len(v)+1):
+    for i in range(len(v)+1):
         s += [[]]
         backtrack += [[]]
-        for j in xrange(len(w)+1):
+        for j in range(len(w)+1):
             s[i] += [0]
             backtrack[i] += [0]
-    for i in xrange(len(v)):
-        for j in xrange(len(w)):
+    for i in range(len(v)):
+        for j in range(len(w)):
             if v[i] != w[j]:
                 s[i][j] = max(s[i-1][j],s[i][j-1],s[i-1][j-1])
             else:
@@ -132,6 +132,7 @@ def outputLCSWrapper(fileName):
     backtrack = LCSBacktrack(s,t)
     LCS = ""
     LCSa = outputLCS(backtrack, s, len(s), len(t),LCS)
-    print LCSa
+    print(LCSa)
                 
-sys.setrecursionlimit(10000)        
+sys.setrecursionlimit(10000)
+

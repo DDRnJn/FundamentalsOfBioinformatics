@@ -20,7 +20,7 @@ def farthestFirstTraversalWrapper(fileName):
     for point in centers:
         line = " ".join(str(i) for i in point)
         output += line + "\n"
-    print output
+    print(output)
     fout.write(output)
 
 def farthestFirstTraversal(k,m,points):
@@ -37,7 +37,7 @@ def maxDist(centers, points, m):
 
     maxDist = -sys.maxint-1
     maxDistPoint = None
-    for i in xrange(len(points)):
+    for i in range(len(points)):
         distance = 0.0
         minDist = sys.maxint
         for center in centers:
@@ -52,7 +52,7 @@ def maxDist(centers, points, m):
 def euclideanDistance(point, center, m):
 
     distance = 0.0
-    for i in xrange(m):
+    for i in range(m):
         distance += (point[i]-center[i])**2
     return math.sqrt(distance)
 
@@ -64,7 +64,7 @@ def squaredErrorDistortionWrapper(fileName):
     m = int(first[1])
     centers = []
     points = []
-    for center in xrange(k):
+    for center in range(k):
         current = contents.pop(0)
         centers += [map(float, current.split())]
     contents.pop(0) #pop the "-------" line thing
@@ -76,7 +76,7 @@ def squaredErrorDistortionWrapper(fileName):
 def squaredErrorDistortion(k,m,centers,points):
 
     SED = 0.0
-    for i in xrange(len(points)):
+    for i in range(len(points)):
         distance = 0.0
         minDist = sys.maxint
         for center in centers:
@@ -101,7 +101,7 @@ def lloydAlgorithmWrapper(fileName):
     for point in centers:
         line = " ".join(str(i) for i in point)
         output += line + "\n"
-    print output
+    print(output)
     fout.write(output)
     
 def lloydAlgorithm(k,m,points):
@@ -109,14 +109,14 @@ def lloydAlgorithm(k,m,points):
     clusters = defaultdict(list)
     centers = points[:k]
     while True:
-        for i in xrange(k):
+        for i in range(k):
             clusters[i]=[]
-        for i in xrange(len(points)):
+        for i in range(len(points)):
             distance = 0.0
             minDist = sys.maxint
             minDistCenter = None
             cluster = -1
-            for j in xrange(k):
+            for j in range(k):
                 distance = euclideanDistance(points[i],centers[j], m)
                 if distance < minDist:
                     minDist = distance
@@ -136,9 +136,9 @@ def lloydAlgorithm(k,m,points):
 def centerOfGravity(cluster,m):
 
     center = []
-    for i in xrange(m):
+    for i in range(m):
         coord = 0.0
-        for j in xrange(len(cluster)):
+        for j in range(len(cluster)):
             coord += cluster[j][i]
         center += [coord/(float(len(cluster)))]
     return center
@@ -159,7 +159,7 @@ def EMaximizationWrapper(fileName):
     for point in centers:
         line = " ".join(str(i) for i in point)
         output += line + "\n"
-    print output
+    print(output)
     fout.write(output)
 
 def EMaximization(k,m,stiffness,points):
@@ -167,12 +167,12 @@ def EMaximization(k,m,stiffness,points):
     clusters = defaultdict(list)
     centers = points[:k]
     n = len(points)
-    for e in xrange(100):
+    for e in range(100):
         newCenters = []
         hiddenMatrix = makeHM(k,m,stiffness,centers,points) #E step
-        for i in xrange(k):
+        for i in range(k):
             currentCenter = [] 
-            for j in xrange(m):
+            for j in range(m):
                 numerator = getNum(hiddenMatrix, points, i, j)
                 denominator = getDenom(hiddenMatrix,i,n)
                 currentCenter+=[(numerator/denominator)]
@@ -183,14 +183,14 @@ def EMaximization(k,m,stiffness,points):
 def getNum(hiddenM, points, i, j):
 
     res = 0.0
-    for m in xrange(len(points)):
+    for m in range(len(points)):
         res+=hiddenM[i][m]*points[m][j]
     return res
 
 def getDenom(hiddenM, i, n):
 
     res = 0.0
-    for m in xrange(n):
+    for m in range(n):
         res += hiddenM[i][m]
     return res
 
@@ -198,8 +198,8 @@ def makeHM(k,m,stiffness,centers,points): #Statistical partition way.
 
     hm = defaultdict(lambda: defaultdict(float))
     n = len(points)
-    for i in xrange(k):
-        for j in xrange(n):
+    for i in range(k):
+        for j in range(n):
             numerator = math.exp(-stiffness*euclideanDistance(points[j],centers[i],m))
             denominator = sum([math.exp(-stiffness*euclideanDistance(points[j],x,m)) for x in centers])
             hm[i][j] = numerator/denominator
@@ -209,8 +209,8 @@ def makeHM2(k,m,stiffness,centers,points): #The Newtonian way.
 
     hm = defaultdict(lambda: defaultdict(float))
     n = len(points)
-    for i in xrange(k):
-        for j in xrange(n):
+    for i in range(k):
+        for j in range(n):
             if i!=j:
                 numerator = 1/(euclideanDistance(points[j],centers[i],m))**2
                 denominator = sum([1/(euclideanDistance(points[j],x,m))**2 for x in centers if x!=points[j]])

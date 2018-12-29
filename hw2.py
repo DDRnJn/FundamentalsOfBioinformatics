@@ -29,13 +29,13 @@ def motifEnumeration(Dna, k, d):
                 finalPatterns += [neighbor]
             inSeqs = True
     finalPatterns = list(set(finalPatterns))
-    #print finalPatterns
+    #print(finalPatterns)
     return " ".join(finalPatterns)
 
 def patternGen(text, k):
     
     patterns = [] 
-    for i in xrange(0, len(text)-k+1):
+    for i in range(0, len(text)-k+1):
         patterns += [text[i:(k+i)]]
     return patterns 
 
@@ -71,7 +71,7 @@ def neighbors(pattern, d):
 def medianString(k, Dna):
 
     distance = sys.maxint
-    for i in xrange(0,(4**k)):
+    for i in range(0,(4**k)):
         pattern = numberToPattern(i, k)
         if distance > distanceBetweenPatternAndString(pattern, Dna):
             distance = distanceBetweenPatternAndString(pattern, Dna)
@@ -126,7 +126,7 @@ def profileMostProbableKmer(text,k,matrix):
 def profileScore(pattern, matrix):
 
     score = 1
-    for i in xrange(0,len(pattern)):
+    for i in range(0,len(pattern)):
         if pattern[i]=="A":
             score *= matrix[0][i]
         elif pattern[i]=="C":
@@ -162,7 +162,7 @@ def greedyMotifSearch(Dna, k, t):
     for motif in firstStringMotifs:
         motifs = []
         motifs += [motif]
-        for i in xrange(1,t):
+        for i in range(1,t):
             currentProfile = formProfile(motifs)
             currentSeq = Dna[i]
             mostProbable = profileMostProbableKmer(currentSeq, k, currentProfile)
@@ -178,19 +178,19 @@ def greedyMotifSearchFileWrapper(fileName):
     contents.pop(0)
     Dna = contents
     bestMotifs = greedyMotifSearch(Dna, int(k), int(t))
-    print " ".join(bestMotifs)
+    print(" ".join(bestMotifs))
 
 def motifScore(motifs):
 
     totalScore = 0
     t = len(motifs)
     k = len(motifs[0])
-    for i in xrange(0,k):
+    for i in range(0,k):
         countA = 0
         countC = 0
         countG = 0
         countT = 0
-        for j in xrange(0,t):
+        for j in range(0,t):
             currentBase = motifs[j][i]
             if currentBase=="A":
                 countA += 1
@@ -211,12 +211,12 @@ def formCountMatrix(motifs):
     t = len(motifs)
     k = len(motifs[0])
     countMatrix = [[],[],[],[]]
-    for i in xrange(0,k):
+    for i in range(0,k):
         countA = 0
         countC = 0
         countG = 0
         countT = 0
-        for j in xrange(0,t):
+        for j in range(0,t):
             currentBase = motifs[j][i]
             if currentBase=="A":
                 countA += 1
@@ -237,12 +237,12 @@ def formCountMatrixPseudo(motifs):
     t = len(motifs)
     k = len(motifs[0])
     countMatrix = [[],[],[],[]]
-    for i in xrange(0,k):
+    for i in range(0,k):
         countA = 1
         countC = 1
         countG = 1
         countT = 1
-        for j in xrange(0,t):
+        for j in range(0,t):
             currentBase = motifs[j][i]
             if currentBase=="A":
                 countA += 1
@@ -264,7 +264,7 @@ def formProfile(motifs):
     countMatrix = formCountMatrix(motifs)
     k = len(countMatrix[0])
     profileMatrix = [[],[],[],[]]
-    for i in xrange(0,k):
+    for i in range(0,k):
         countA = countMatrix[0][i]
         countC = countMatrix[1][i]
         countG = countMatrix[2][i]
@@ -285,7 +285,7 @@ def formProfilePseudo(motifs):
     countMatrix = formCountMatrixPseudo(motifs)
     k = len(countMatrix[0])
     profileMatrix = [[],[],[],[]]
-    for i in xrange(0,k):
+    for i in range(0,k):
         countA = countMatrix[0][i]
         countC = countMatrix[1][i]
         countG = countMatrix[2][i]
@@ -308,7 +308,7 @@ def greedyMotifSearchPseudo(Dna, k, t):
     for motif in firstStringMotifs:
         motifs = []
         motifs += [motif]
-        for i in xrange(1,t):
+        for i in range(1,t):
             currentProfile = formProfilePseudo(motifs)
             currentSeq = Dna[i]
             mostProbable = profileMostProbableKmer(currentSeq, k, currentProfile)
@@ -324,7 +324,7 @@ def greedyMotifSearchFileWrapperPseudo(fileName):
     contents.pop(0)
     Dna = contents
     bestMotifs = greedyMotifSearchPseudo(Dna, int(k), int(t))
-    print " ".join(bestMotifs)
+    print(" ".join(bestMotifs))
 
 def randomizedMotifSearch(Dna, k, t):
     
@@ -337,7 +337,7 @@ def randomizedMotifSearch(Dna, k, t):
     while True:
         profile = formProfilePseudo(motifs)
         motifs = []
-        for i in xrange(0,t):
+        for i in range(0,t):
             currentSeq = Dna[i]
             mostProbable = profileMostProbableKmer(currentSeq, k, profile)
             motifs += [mostProbable]
@@ -354,7 +354,7 @@ def gibbsSampler(Dna, k, t, N):
         randomIndex = random.randint(0,len(kmers)-1)
         motifs += [kmers[randomIndex]]
     bestMotifs = motifs
-    for j in xrange(0, N):
+    for j in range(0, N):
         i = random.randint(0,t)
         profile = formProfilePseudo(motifs.pop(i))
         motifi = profileRandomlyGeneratedKmer(profile,Dna[i],k)
@@ -375,7 +375,7 @@ def profileRandomlyGeneratedKmer(profile, seq, k):
         probabilitiesCorrected += [float(prob)/totalProb]
     randomNum = random.randint(0,totalProb)
     total = 0
-    for i in xrange(len(probabilitiesCorrected)):
+    for i in range(len(probabilitiesCorrected)):
         total += probabilitiesCorrected[i]
         if randomNum < total:
             return seq[i]
@@ -388,7 +388,7 @@ def randomizedMotifSearchWrapper(fileName):
     Dna = contents
     allMotifs = []
     bestMotifs = []
-    for i in xrange(1000):
+    for i in range(1000):
         bestMotif = randomizedMotifSearch(Dna, int(k), int(t))
         allMotifs += [bestMotif]
     bestMotifs = allMotifs[0]
@@ -396,20 +396,20 @@ def randomizedMotifSearchWrapper(fileName):
         if motifScore(motifs) < motifScore(bestMotifs):
             bestMotifs = motifs
     for m in bestMotifs:
-        print m
-    #print " ".join(bestMotifs)
+        print(m)
+    #print(" ".join(bestMotifs))
 
 def randomizedMotifSearchWrapper2(Dna, k, t):
 
     allMotifs = []
-    for i in xrange(1000):
+    for i in range(1000):
         bestMotif = randomizedMotifSearch(Dna, k, t)
         allMotifs += [bestMotif]
     bestMotifs = allMotifs[0]
     for motifs in allMotifs:
         if motifScore(motifs) < motifScore(bestMotifs):
             bestMotifs = motifs
-    print " ".join(bestMotifs)
+    print(" ".join(bestMotifs))
 
 
     

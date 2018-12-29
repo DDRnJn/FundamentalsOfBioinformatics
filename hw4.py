@@ -38,7 +38,7 @@ def getCodons(pattern):
 
     codons = []
     codonNumber = len(pattern)-2
-    for s in xrange(0,codonNumber,3):
+    for s in range(0,codonNumber,3):
         currentCodon = pattern[s] + pattern[s+1] + pattern[s+2]
         codons += [currentCodon]
     return codons
@@ -56,7 +56,7 @@ def rnaTranslateWrapper(fileName):
 def reverseComplement(pattern):
 
     newPattern = []
-    for i in xrange(len(pattern)):
+    for i in range(len(pattern)):
         if pattern[i] == "A":
             newPattern += "T"
         elif pattern[i] == "T":
@@ -71,7 +71,7 @@ def reverseComplement(pattern):
 def reverseComplementRna(pattern):
 
     newPattern = []
-    for i in xrange(len(pattern)):
+    for i in range(len(pattern)):
         if pattern[i] == "A":
             newPattern += "U"
         elif pattern[i] == "U":
@@ -89,7 +89,7 @@ def peptideEncoding(text, peptide, geneticCode):
     dnaSubstrings = []
     codonLength = 3
     substringLength = len(peptide)*codonLength
-    for s in xrange(0,len(rna)):
+    for s in range(0,len(rna)):
         substring = rna[s:s+substringLength]
         if len(substring) == substringLength:
             currentPeptide = rnaTranslate(substring, geneticCode)
@@ -110,7 +110,7 @@ def peptideEncodingWrapper(fileName):
     contents.pop(0)
     peptide = contents[0]
     dnaSubstrings = peptideEncoding(text, peptide, geneticCode)
-    print str(dnaSubstrings)
+    print(str(dnaSubstrings))
     fout = open("texts\hw4\hw4q2Answer.txt", "wt")
     for s in dnaSubstrings:
         fout.write(s)
@@ -149,13 +149,13 @@ def cyclicSpectrum(peptide, AAMassDict):
 
     prefixMasses = []
     prefixMasses += [0]
-    for i in xrange(len(peptide)):
+    for i in range(len(peptide)):
         prefixMasses += [prefixMasses[i] + int(AAMassDict.get(peptide[i]))]
     peptideMass = prefixMasses[len(peptide)]
     cyclicSpectrum = []
     cyclicSpectrum += [0]
-    for i in xrange(0,len(peptide)-1):
-        for j in xrange(i+1, len(peptide)):
+    for i in range(0,len(peptide)-1):
+        for j in range(i+1, len(peptide)):
             cyclicSpectrum += [prefixMasses[j]-prefixMasses[i]]
             if i >= 0 and j < len(peptide):
                 cyclicSpectrum += [peptideMass - (prefixMasses[j] - prefixMasses[i])]
@@ -165,12 +165,12 @@ def linearSpectrum(peptide, AAMassDict):
 
     prefixMasses = []
     prefixMasses += [0]
-    for i in xrange(len(peptide)):
+    for i in range(len(peptide)):
         prefixMasses += [prefixMasses[i] + int(AAMassDict.get(peptide[i]))]
     linearSpectrum = []
     linearSpectrum += [0]
-    for i in xrange(0,len(peptide)-1):
-        for j in xrange(i+1, len(peptide)):
+    for i in range(0,len(peptide)-1):
+        for j in range(i+1, len(peptide)):
             linearSpectrum += [prefixMasses[j]-prefixMasses[i]]
     return sorted(linearSpectrum) + [peptideMass]
 
@@ -178,13 +178,13 @@ def linearSpectrumNum(peptide, AAMassDict):
 
     prefixMasses = []
     prefixMasses += [0]
-    for i in xrange(len(peptide)):
+    for i in range(len(peptide)):
         prefixMasses += [prefixMasses[i] + int(peptide[i])]
     peptideMass = prefixMasses[len(peptide)]
     linearSpectrum = []
     linearSpectrum += [0]
-    for i in xrange(0,len(peptide)-1):
-        for j in xrange(i+1, len(peptide)):
+    for i in range(0,len(peptide)-1):
+        for j in range(i+1, len(peptide)):
             linearSpectrum += [prefixMasses[j]-prefixMasses[i]]
     return sorted(linearSpectrum) + [peptideMass]
 
@@ -192,13 +192,13 @@ def cyclicSpectrumNum(peptide, AAMassDict):
 
     prefixMasses = []
     prefixMasses += [0]
-    for i in xrange(len(peptide)):
+    for i in range(len(peptide)):
         prefixMasses += [prefixMasses[i] + int((peptide[i]))]
     peptideMass = prefixMasses[len(peptide)]
     cyclicSpectrum = []
     cyclicSpectrum += [0]
-    for i in xrange(0,len(peptide)-1):
-        for j in xrange(i+1, len(peptide)):
+    for i in range(0,len(peptide)-1):
+        for j in range(i+1, len(peptide)):
             cyclicSpectrum += [prefixMasses[j]-prefixMasses[i]]
             if i >= 0 and j < len(peptide):
                 cyclicSpectrum += [peptideMass - (prefixMasses[j] - prefixMasses[i])]
@@ -211,7 +211,7 @@ def cyclicSpectrumWrapper(fileName):
     AAMassDict = aminoAcidWeightTable("texts/hw4/aminoAcidWeightTable.txt")
     cyclicSpec = cyclicSpectrum(peptide, AAMassDict)
     fout = open("texts\hw4\hw4q3Answer.txt", "wt")
-    print " ".join(str(i) for i in cyclicSpec)
+    print(" ".join(str(i) for i in cyclicSpec))
     fout.write(" ".join(str(i) for i in cyclicSpec))
 
 def numLinearSubseqs(n):
@@ -273,7 +273,7 @@ def cyclopeptideSequencingWrapper(fileName):
     peptides = cyclopeptideSequencing(spectrum, AAWeightList, AAMassDict)
     fout = open("texts\hw4\hw4q4Answer.txt", "wt")
     peptides = formatPeptides(peptides)
-    print " ".join(peptides)
+    print(" ".join(peptides))
     fout.write (" ".join(peptides))
     fin.close()
     fout.close() 
@@ -316,9 +316,9 @@ def expand(peptides, AAWeightList):
     finalLength = currentLength + 1
     newPeptides = []
     for peptide in peptides:
-        for j in xrange(0,len(AAWeightList)):
+        for j in range(0,len(AAWeightList)):
             newPeptides += [peptide + [AAWeightList[j]]]
-    for i in xrange(len(newPeptides)):
+    for i in range(len(newPeptides)):
         if newPeptides[i] == []:
             newPeptides.pop(i)
     return newPeptides
@@ -373,7 +373,7 @@ def cyclopeptideScoreWrapper(fileName):
     spectrum += [currentNum]
     spectrum[len(spectrum)-1] = spectrum[len(spectrum)-1].rstrip()
     score = cyclopeptideScore(peptide, spectrum, AAMassDict)
-    print score
+    print(score)
 
 def leaderboardCyclopeptideSequencing(spectrum, N, AAMassDict, AAWeightList):
 
@@ -401,13 +401,13 @@ def leaderboardCyclopeptideSequencing(spectrum, N, AAMassDict, AAWeightList):
 def trim(leaderboard, spectrum, N, AAMassDict):
 
     linearScores = []
-    for j in xrange(len(leaderboard)):
+    for j in range(len(leaderboard)):
         peptide = leaderboard[j]
         linearScores += [(peptide, linearScore(peptide, spectrum, AAMassDict))]
     linearScores = sorted(linearScores,key=itemgetter(1))
     linearScores.reverse()
     newLinearScores = copy.copy(linearScores)
-    for j in xrange(N+1, len(linearScores)):
+    for j in range(N+1, len(linearScores)):
         if linearScores[j] < linearScores[N]:
             newLinearScores[j:len(newLinearScores)] = []
     newLeaderboard = []
@@ -441,13 +441,13 @@ def leaderboardCyclopeptideSequencingWrapper(fileName):
     AAWeightList = sorted(list(set(AAWeightList)))
     finalPeptide = leaderboardCyclopeptideSequencing(spectrum, N, AAMassDict, AAWeightList)
     finalPeptide = formatPeptides([finalPeptide])
-    print finalPeptide[0]
+    print(finalPeptide[0])
     
 def spectralConvolution(spectrum):
 
     convolution = []
-    for i in xrange(len(spectrum)):
-        for j in xrange(len(spectrum)):
+    for i in range(len(spectrum)):
+        for j in range(len(spectrum)):
             if spectrum[i] - spectrum[j] > 0:
                 convolution += [spectrum[i]-spectrum[j]]
     return convolution
@@ -467,9 +467,9 @@ def spectralConvolutionWrapper(fileName):
     spectrum[len(spectrum)-1] = spectrum[len(spectrum)-1].rstrip()
     spectrum = (map(int, spectrum))
     spectrum.sort()
-    print spectrum
+    print(spectrum)
     convolution = spectralConvolution(spectrum)
-    print " ".join(map(str, convolution))
+    print(" ".join(map(str, convolution)))
     fout = open("texts\hw4\spectralConvolutionAnswer.txt", "wt")
     fout.write(" ".join(map(str,convolution)))
 
@@ -493,12 +493,12 @@ def mMostFrequent(M, convolution):
     counts = sorted(counts,key=itemgetter(1))
     counts.reverse()
     newCounts = copy.copy(counts)
-    for j in xrange(M+1, len(counts)):
+    for j in range(M+1, len(counts)):
         if counts[j] < counts[M]:
             newCounts[j:len(newCounts)] = []
     for j in newCounts:
         alphabet += [j[0]]
-    print map(str, sorted(alphabet))
+    print(map(str, sorted(alphabet)))
     return map(str, sorted(alphabet))
 
 def convolutionCyclopeptideSequencingWrapper(fileName):
@@ -520,19 +520,19 @@ def convolutionCyclopeptideSequencingWrapper(fileName):
         else:
             currentNum += s
     spectrum += [currentNum]
-    print spectrum
+    print(spectrum)
     spectrum[len(spectrum)-1] = spectrum[len(spectrum)-1].rstrip()
     spectrum = (map(int, spectrum))
     spectrum.sort()
     spectrum = (map(str, spectrum))
     finalPeptide = convolutionCyclopeptideSequencing(M, N, spectrum)
     finalPeptide = formatPeptides([map(str,finalPeptide)])
-    print finalPeptide[0]
+    print(finalPeptide[0])
 
 def tester():
 
     AAMassDict = aminoAcidWeightTable("texts/hw4/aminoAcidWeightTable.txt")
     s = [0,71,113,129,147,200,218,260,313,331,347,389,460]
     s = map(str, s)
-    print linearSpectrumNum([71,147], AAMassDict)
-    print linearScore([71,147],s,AAMassDict)
+    print(linearSpectrumNum([71,147], AAMassDict))
+    print(linearScore([71,147],s,AAMassDict))

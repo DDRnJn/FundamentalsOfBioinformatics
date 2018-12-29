@@ -7,7 +7,7 @@ import copy
 def patternGen(text, k):
     
     patterns = []
-    for i in xrange(0, len(text)-k+1):
+    for i in range(0, len(text)-k+1):
         patterns += [text[i:(k+i)]]
     return patterns
 
@@ -49,7 +49,7 @@ def makeOverlapGraph(kmers):
                 if kmer[-(len(kmer)-1):] == kmer2[:len(kmer2)-1]:
                     graph[kmer] = graph.get(kmer,[]) + [kmer2]
     #for key in graph:
-        #print key + " -> " + ", ".join(graph.get(key))
+        #print(key + " -> " + ", ".join(graph.get(key)))
     return graph
         
 
@@ -68,7 +68,7 @@ def makeDeBruijnGraph(k, text):
     deBruijnGraph = makePrelimGraph(kmers)
     return deBruijnGraph
     #for key in deBruijnGraph:
-        #print key + " -> " + ", ".join(deBruijnGraph.get(key))
+        #print(key + " -> " + ", ".join(deBruijnGraph.get(key)))
 
 def makePrelimGraph(kmers):
 
@@ -127,7 +127,7 @@ def mergeCycles(initialCycle, newCycle):
     mergedCycle = []
     newInitial = copy.copy(initialCycle)
     appendToEnd = []
-    for i in xrange(len(initialCycle)):
+    for i in range(len(initialCycle)):
         if initialCycle[i] == startingNode:
             break
         appendToEnd += [initialCycle[i]]
@@ -142,8 +142,8 @@ def randomWalkNoRepeats(graph, randomNode):
     currentNode = copy.copy(randomNode)
     while True:
         cycle += [currentNode]
-        print currentNode
-        print graph.get(currentNode)
+        print(currentNode)
+        print(graph.get(currentNode))
         randomIndex = random.randint(0,len(graph.get(currentNode))-1)
         randomNeighbor = graph.get(currentNode).pop(randomIndex)
         if graph.get(currentNode)==[]:
@@ -173,7 +173,7 @@ def randomWalkNoRepeatsWrapper(fileName):
         currentValues += [currentString]
         graph[key] = graph.get(key,[]) + currentValues
     cycle = randomWalkNoRepeats(graph,random.choice(graph.keys()))
-    print "->".join(cycle)
+    print("->".join(cycle))
 
 #This nonsense doesn't work.
 def eulerianCycle2(graph):
@@ -194,7 +194,7 @@ def eulerianCycle2(graph):
             randomIndex = random.randint(0,len(graph.get(currentNode))-1)
             randomNeighbor = graph.get(currentNode).pop(randomIndex)
             currentNode= randomNeighbor
-    print "cycle: " + str(cycle)
+    print("cycle: " + str(cycle))
     return cycle
 
 def chooseNode(graph):
@@ -236,7 +236,7 @@ def chooseNodeWrapper(fileName):
         currentValues += [currentString]
         graph[key] = graph.get(key,[]) + currentValues
     (startNode, endNode) = chooseNode(graph)
-    print startNode, endNode
+    print(startNode, endNode)
 
 def eulerianCycleWrapper(fileName):
 
@@ -263,9 +263,9 @@ def eulerianCycleWrapper(fileName):
 def eulerianPath(graph):
 
     (startNode, endNode) = chooseNode(graph)
-    print startNode, endNode
+    print(startNode, endNode)
     graph[endNode] = graph.get(endNode,[]) + [startNode]
-    print str(graph[endNode])
+    print(str(graph[endNode]))
     cycle = eulerianCyclePath(graph, startNode, endNode)
     return cycle
 
@@ -292,9 +292,9 @@ def randomWalkNoRepeatsPath(graph, randomNode, endNode):
     finalTrigger = 0
     while True:
         cycle += [currentNode]
-        print currentNode
-        print graph.get(currentNode)
-        print graph.get(endNode)
+        print(currentNode)
+        print(graph.get(currentNode))
+        print(graph.get(endNode))
         while True: #make sure endNode is only used up in the final case
             randomIndex = random.randint(0,len(graph.get(currentNode))-1)
             if graph.get(currentNode)[randomIndex] != endNode:
@@ -370,7 +370,7 @@ def mergeCyclesPath(initialCycle, newCycle):
     mergedCycle = []
     newInitial = copy.copy(initialCycle)
     appendToEnd = []
-    for i in xrange(len(initialCycle)):
+    for i in range(len(initialCycle)):
         if initialCycle[i] == startingNode:
             break
         appendToEnd += [initialCycle[i]]
@@ -400,7 +400,7 @@ def eulerianPathWrapper(fileName):
     path = eulerianPath(graph)
     fout = open("texts\hw3q7Answer.txt", "wt")
     fout.write("->".join(path))
-    print "->".join(path)
+    print("->".join(path))
     
 
 def makeEdgeList(graph):

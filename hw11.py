@@ -27,7 +27,7 @@ def trieConstruction(patterns):
     newNode = 0
     for pattern in patterns:
         currentNode = 0
-        for i in xrange(len(pattern)):
+        for i in range(len(pattern)):
             currentSymbol = pattern[i]
             if currentSymbol in trie[currentNode].values():
                 currentNode = getKey(trie[currentNode], currentSymbol)
@@ -48,7 +48,7 @@ def addRoot(trie, patterns):
 
     currentNode = 0
     symbols = []
-    for i in xrange(len(patterns)):
+    for i in range(len(patterns)):
         currentSymbol = patterns[i][0]
         if currentSymbol not in symbols:
             symbols.append(currentSymbol)
@@ -127,9 +127,9 @@ def suffixTrieConstruction(text):
     labelDict = defaultdict(int)
     currentNode = 0
     newNode = 0
-    for i in xrange(len(text)):
+    for i in range(len(text)):
         currentNode = 0
-        for j in xrange(i,len(text)):
+        for j in range(i,len(text)):
             currentSymbol = text[j]
             if currentSymbol in trie[currentNode].values():
                 currentNode = getKey(trie[currentNode], currentSymbol)
@@ -182,10 +182,10 @@ def suffixArray(text):
 
     suffixes = []
     positions = []
-    for i in xrange(len(text)):
+    for i in range(len(text)):
         suffixes.append(text[-i:])
     positions+=[0]
-    for i in xrange(1,len(text)):
+    for i in range(1,len(text)):
         positions.append(len(text)-i)
     positions2 = sorted(zip(suffixes,positions), key=lambda x: x[0])
     output = [i[1] for i in positions2]
@@ -196,7 +196,7 @@ def longestRepeatWrapper(fileName):
     contents = open(fileName).readlines()
     text = contents[0]
     longestRep = longestRepeat(text)
-    print longestRep
+    print(longestRep)
 
 def longestRepeat(text):
 
@@ -226,16 +226,16 @@ def longestSharedWrapper(fileName):
     s1 = contents[0]
     s2 = contents[1]
     longestSharedAns = longestShared(s1,s2)
-    print longestSharedAns
+    print(longestSharedAns)
 
 def longestShared(s1, s2):
 
     text = s1+"#"+s2+"$"
     (tree, positionDict, labelDict, lengthDict) = suffixTreeConstruction(text)
     #(tree2, positionDict2, labelDict2, lengthDict2) = suffixTreeConstruction(s2+"$")
-    print max(labelDict.values())
-    print len(s1)
-    print len(s2)
+    print(max(labelDict.values()))
+    print(len(s1))
+    print(len(s2))
     longest = ""
     root = 0
     queue = [root]
@@ -260,7 +260,7 @@ def shortestNonSharedWrapper(fileName):
     s1 = contents[0]
     s2 = contents[1]
     output = shortestNonShared(s1,s2)
-    print output
+    print(output)
 
 def shortestNonShared(s1,s2):
 
@@ -284,5 +284,5 @@ def shortestNonShared(s1,s2):
                 sDict[w]+=sDict[v]+current
                 lDict[w]+=lengthDict[v][w] + lDict[v]
     maxKey = min(lDict, key=lDict.get)
-    print lDict
+    print(lDict)
     return sDict[maxKey]

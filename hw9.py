@@ -10,9 +10,9 @@ def neighborJoiningWrapper(fileName):
     contents = open(fileName).readlines()
     n = int(contents.pop(0).strip())
     distanceDict = defaultdict(lambda: defaultdict(int))
-    for j in xrange(len(contents)):
+    for j in range(len(contents)):
         current = map(int, contents[j].split())
-        for i in xrange(len(current)):
+        for i in range(len(current)):
             distanceDict[i][j]=current[i]
     finalDict = {}
     treeDict = neighborJoining(n, distanceDict)
@@ -116,21 +116,21 @@ def smallParsimonyWrapper(fileName):
         treeDict[key].append(to)
     outputDict = defaultdict(str)
     resultDict = defaultdict(str)
-    for i in xrange(n-1):
+    for i in range(n-1):
         outputDict[i]=""
         outputDict[n+i]=""
     outputDict[i+1]=""
     resultDict = copy.copy(outputDict)
     leafList = range(0,n)
-    for i in xrange(((len(treeDict))/2)+1):
+    for i in range(((len(treeDict))/2)+1):
         if len(treeDict[str(n+i)][0])>1:
             treeDict[str(n+i)][0] = leafList.pop(0)
             treeDict[str(n+i)][1] = leafList.pop(0)
     parsimonyScore = 0
     nLength = len(leaves[0])
-    for i in xrange(nLength):
+    for i in range(nLength):
         ithChars = getI(leaves,i)
-        for j in xrange(len(leaves)):
+        for j in range(len(leaves)):
             outputDict[j]=ithChars[j]
         (score, labelling, scoreDict) = smallParsimony(outputDict,treeDict,n)
         parsimonyScore += score

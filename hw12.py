@@ -12,13 +12,13 @@ def BWTWrapper(fileName):
     text = contents[0]
     b = BWT(text)
     output = "".join(str(i) for i in b)
-    print output
+    print(output)
 
 def BWT(text):
 
     rotations = []
     bMatrix = []
-    for i in xrange(len(text)):
+    for i in range(len(text)):
         current = text[-i:]+text[:-i]
         rotations.append(current)
     bMatrix = sorted(rotations)
@@ -35,7 +35,7 @@ def BWTInverseWrapper(fileName):
     contents = open(fileName).readlines()
     text = contents[0]
     bInverse = BWTInverse(text)
-    print bInverse
+    print(bInverse)
 
 def BWTInverse(text):
 
@@ -45,7 +45,7 @@ def BWTInverse(text):
     currentChar = fCol[currentIndex]
     inverse+=currentChar
     currentIndex = text.find(currentChar)
-    for i in xrange(len(text)-1):
+    for i in range(len(text)-1):
         currentChar = fCol[currentIndex]
         inverse+=currentChar
         nIndex = findCharN(fCol,currentChar,currentIndex)
@@ -105,7 +105,7 @@ def patternMatch(lCol,pattern,lastToFirst):
 def LTF(BW,fCol):
 
     lastToFirst = []
-    for i in xrange(len(BW)-1):
+    for i in range(len(BW)-1):
         currentIndex = findCharN(BW,BW[i],i)
         lastToFirst.append(findNChar(fCol,BW[i],currentIndex)-1)
     return lastToFirst
@@ -137,7 +137,7 @@ def getCD(BW):
     countDict = defaultdict(lambda: defaultdict(int))
     for i in alphabet:
         countDict[0][i]=0
-    for i in xrange(len(BW)):
+    for i in range(len(BW)):
         current = copy.copy(countDict[i])
         current[BW[i]]+=1
         countDict[i+1]=copy.copy(current)
@@ -178,8 +178,8 @@ def multiplePatternMatchingWrapper(fileName):
     counts = sorted(map(str,counts))
     fout = open("texts/hw12/multipleMatchingAnswer.txt","wt")
     output = " ".join(str(i) for i in counts)
-    print output
-    print len(output)
+    print(output)
+    print(len(output))
     fout.write(output)
 
 def multiplePatternMatching(text, patterns):
@@ -210,7 +210,7 @@ def mPatternMatch(FO,lCol,pattern,count,SA):
             else:
                 return res
         else:
-            for i in xrange(top,bottom+1):
+            for i in range(top,bottom+1):
                 res.append(SA[i])
             return res
 
@@ -218,10 +218,10 @@ def suffixArray(text):
 
     suffixes = []
     positions = []
-    for i in xrange(len(text)):
+    for i in range(len(text)):
         suffixes.append(text[-i:])
     positions+=[0]
-    for i in xrange(1,len(text)):
+    for i in range(1,len(text)):
         positions.append(len(text)-i)
     positions2 = sorted(zip(suffixes,positions), key=lambda x: x[0])
     output = [i[1] for i in positions2]

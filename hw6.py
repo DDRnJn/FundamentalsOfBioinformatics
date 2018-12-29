@@ -8,7 +8,7 @@ def importMatrix(fileName):
     contents = open(fileName).readlines()
     keys = [str(i) for i in contents[0].strip().split()]
     contents.pop(0)
-    for i in xrange(len(contents)):
+    for i in range(len(contents)):
         line = contents[i][1:]
         line.strip()
         contents[i] = line
@@ -31,7 +31,7 @@ def globalAlignment(s, t, indelCost, blosum62Dict, lookupDict):
                (blosum62Dict[(s[0],t[0])]+solution3[0],s[0]+solution3[1],t[0]+solution3[2])]
     bestAlignmentIndex = 0
     currentBest = -sys.maxint - 1
-    for i in xrange(len(answers)):
+    for i in range(len(answers)):
         if answers[i][0]>currentBest:
             currentBest = answers[i][0]
             bestAlignmentIndex = i
@@ -51,26 +51,26 @@ def globalAlignmentWrapper(fileName):
     contents = open(fileName).readlines()
     s = contents[0].strip()
     t = contents[1].strip()
-    print s
-    print t
+    print(s)
+    print(t)
     indelCost = -5
     backtrack = []
-    '''for i in xrange(len(s)):
+    '''for i in range(len(s)):
         backtrack += [[]]
-        for j in xrange(len(t)):
+        for j in range(len(t)):
             backtrack += [0]'''
     lookupDict = {} #Used for memoization. 
     blosum62Dict = {} #dict mapping amino acid pair to blosum62 score.
                       #seems easier than using lists
-    for i in xrange(len(keys)):
-        for j in xrange(len(keys)):
+    for i in range(len(keys)):
+        for j in range(len(keys)):
             blosum62Dict[(keys[i],keys[j])] = blosum62[i][j]
     (score, s1, t1) = globalAlignment(s,t, indelCost, blosum62Dict, lookupDict)
-    print score
-    print "\n"
-    print s1
-    print "\n"
-    print t1
+    print(score)
+    print("\n")
+    print(s1)
+    print("\n")
+    print(t1)
 
 def getSolution2(suffix1, suffix2, indelCost, pam250Dict, lookupDict, best):
     if (suffix1, suffix2) in lookupDict:
@@ -99,7 +99,7 @@ def localAlignment(s,t,indelCost, pam250Dict, lookupDict, best):
                (0, s[0]+"-", t[0]+"-")]
     bestAlignmentIndex = 0
     currentBest = -sys.maxint - 1
-    for i in xrange(len(answers)):
+    for i in range(len(answers)):
         if answers[i][0]>currentBest:
             currentBest = answers[i][0]
             bestAlignmentIndex = i
@@ -117,15 +117,15 @@ def localAlignmentWrapper(fileName):
     contents = open(fileName).readlines()
     s = contents[0].strip()
     t = contents[1].strip()
-    print s
-    print t
+    prin(s)
+    print(t)
     indelCost = -5
     backtrack = []
     lookupDict = {} #Used for memoization. 
     pam250Dict = {} #dict mapping amino acid pair to blosum62 score.
                       #seems easier than using lists
-    for i in xrange(len(keys)):
-        for j in xrange(len(keys)):
+    for i in range(len(keys)):
+        for j in range(len(keys)):
             pam250Dict[(keys[i],keys[j])] = pam250[i][j]
     best = []
     (best, (score, s1, t1)) = localAlignment(s,t, indelCost, pam250Dict, lookupDict, best)
@@ -135,11 +135,11 @@ def localAlignmentWrapper(fileName):
         if i[0] > highestScore:
             highestScore = i[0]
             (bestS, bestT) = (i[1],i[2])
-    print highestScore
-    print "\n"
-    print bestS
-    print "\n"
-    print bestT
+    print(highestScore)
+    print("\n")
+    print(bestS)
+    print("\n")
+    print(bestT)
 
 def editDistance(s,t, lookupDict):
 
@@ -172,12 +172,12 @@ def editDistanceWrapper(fileName):
     contents = open(fileName).readlines()
     s = contents[0].strip()
     t = contents[1].strip()
-    print s
-    print "\n"
-    print t
+    print(s)
+    print("\n")
+    print(t)
     lookupDict = {}
     distance = editDistance(s,t,lookupDict)
-    print distance
+    print(distance)
 
 def fittingAlignment(s,t,matchScore, mismatchCost, indelCost, lookupDict,best):
     
@@ -199,7 +199,7 @@ def fittingAlignment(s,t,matchScore, mismatchCost, indelCost, lookupDict,best):
                (a3+solution3[1][0],s[0]+solution3[1][1],t[0]+solution3[1][2])]
     bestAlignmentIndex = 0
     currentBest = -sys.maxint - 1
-    for i in xrange(len(answers)):
+    for i in range(len(answers)):
         if answers[i][0]>currentBest:
             currentBest = answers[i][0]
             bestAlignmentIndex = i
@@ -222,9 +222,9 @@ def fittingAlignmentWrapper(fileName):
     indelCost = -1
     matchScore = 1
     mismatchCost = -1
-    print s
-    print "\n"
-    print t
+    print(s)
+    print("\n")
+    print(t)
     lookupDict = {}
     best=[]
     (best,(score, s1, t1)) = fittingAlignment(s,t,matchScore, mismatchCost, indelCost, lookupDict,best)
@@ -235,11 +235,11 @@ def fittingAlignmentWrapper(fileName):
             highestScore = i[0]
             (bestS, bestT) = (i[1],i[2])
     (cleanedS, cleanedT) = cleanSeqs(bestS, bestT)
-    print highestScore#, score
-    print "\n"
-    print cleanedS#, s1
-    print "\n"
-    print cleanedT#, t1
+    print(highestScore)#, score
+    print("\n")
+    print(cleanedS)#, s1
+    print("\n")
+    print(cleanedT)#, t1
 
 def checkSeq(s):
 
@@ -284,7 +284,7 @@ def overlapAlignment(s,t,matchScore, mismatchCost, indelCost, lookupDict,best):
                (a3+solution3[1][0],s[0]+solution3[1][1],t[0]+solution3[1][2])]
     bestAlignmentIndex = 0
     currentBest = -sys.maxint - 1
-    for i in xrange(len(answers)):
+    for i in range(len(answers)):
         if answers[i][0]>currentBest:
             currentBest = answers[i][0]
             bestAlignmentIndex = i
@@ -299,9 +299,9 @@ def overlapAlignmentWrapper(fileName):
     indelCost = -2
     matchScore = 1
     mismatchCost = -2
-    print s
-    print "\n"
-    print t
+    print(s)
+    print("\n")
+    print(t)
     lookupDict = {}
     best=[]
     (best,(score, s1, t1)) = overlapAlignment(s,t,matchScore, mismatchCost, indelCost, lookupDict,best)
@@ -313,11 +313,11 @@ def overlapAlignmentWrapper(fileName):
             highestScore = i[0]
             (bestS, bestT) = (i[1],i[2])
     (cleanedS, cleanedT) = cleanSeqs2(bestS, bestT)
-    print highestScore#, score
-    print "\n"
-    print cleanedS#, s1
-    print "\n"
-    print cleanedT#, t1
+    print(highestScore)#, score
+    print("\n")
+    print(cleanedS)#, s1
+    print("\n")
+    print(cleanedT)#, t1
 
 def cleanSeqs2(s,t):
 
@@ -421,8 +421,8 @@ def affineGapAlignmentWrapper(fileName):
     contents = open(fileName).readlines()
     s = contents[0].strip()
     t = contents[1].strip()
-    print s
-    print t
+    print(s)
+    print(t)
     gapOpen = -11
     gapExtend = -1
     lowerDict = {}
@@ -430,12 +430,12 @@ def affineGapAlignmentWrapper(fileName):
     middleDict = {}
     blosum62Dict = {} #dict mapping amino acid pair to blosum62 score.
                       #seems easier than using lists
-    for i in xrange(len(keys)):
-        for j in xrange(len(keys)):
+    for i in range(len(keys)):
+        for j in range(len(keys)):
             blosum62Dict[(keys[i],keys[j])] = blosum62[i][j]
     (score, s1, t1) = affineGapAlignment(s,t,blosum62Dict,lowerDict,upperDict,middleDict,gapOpen,gapExtend)
-    print score
-    print s1
-    print t1
+    print(score)
+    print(s1)
+    print(t1)
     
 sys.setrecursionlimit(5000)

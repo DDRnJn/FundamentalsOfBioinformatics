@@ -15,7 +15,7 @@ def distanceBetweenLeaves(n, tree):
     for leaf in leaves:
         distanceDict = BFS(tree,leaf)
         distanceDict[leaf]=0
-        for i in xrange(len(leaves)):
+        for i in range(len(leaves)):
             resultDict[leaf][i]=distanceDict[i]   
     #print str(resultDict)
     return resultDict
@@ -30,7 +30,7 @@ def BFS(tree,leaf):
     while len(queue) != 0:
         current = queue.pop(0)
         for v in tree.get(current):
-            print v
+            print(v)
             if v[0] not in seen:
                 seen += [v[0]]
                 queue += [v[0]]
@@ -85,11 +85,11 @@ def limbLengthProblemWrapper(fileName):
     n = int(contents.pop(0).strip())
     m = int(contents.pop(0).strip())
     distanceDict = defaultdict(int)
-    for i in xrange(n):
+    for i in range(n):
         distanceDict[i] = [0]*n
-    for j in xrange(len(contents)):
+    for j in range(len(contents)):
         current = map(int, contents[j].split())
-        for i in xrange(len(current)):
+        for i in range(len(current)):
             distanceDict[i][j]=current[i]
     limbLength = limbLengthProblem(n,m,distanceDict)
     return limbLength
@@ -106,54 +106,54 @@ def additivePhylogeny(n, distanceDict, finalDict):
         print "T is: " + str(T)
         return T'''
         return distanceDict
-    print str(distanceDict)
+    print(str(distanceDict))
     limbLength = limbLengthProblem(n-1,n-1,distanceDict)
-    for j in xrange(n):
+    for j in range(n):
         distanceDict[j][n-1] = distanceDict[j][n-1] - limbLength
         distanceDict[n-1][j] = distanceDict[j][n-1]
-    print str(distanceDict)
+    print(str(distanceDict))
     (i2,n2,k2) = (0,0,0)
-    for i in xrange(n):
-        for k in xrange(n):
+    for i in range(n):
+        for k in range(n):
             din = distanceDict[i][n-1]
             dnk = distanceDict[n-1][k]
             dik = distanceDict[i][k]
             if dik == (din + dnk) and i != k: 
                 (i2,n2,k2) = (i,n,k)
-    print i2,n2,k2
+    print(i2,n2,k2)
     x = distanceDict[i2][n-1]
     distanceDict.pop(n-1)
     for key in distanceDict:
         if distanceDict[key] != []:
             distanceDict[key].pop(n-1)
-    print str(distanceDict)
+    print(str(distanceDict))
     T = additivePhylogeny(n-1, distanceDict, finalDict)
-    print str(distanceDict)
-    print str(i2)
+    print(str(distanceDict))
+    print(str(i2))
     D2 = BFS2(distanceDict, i2)
-    print "D2 is: " + str(D2)
+    print("D2 is: " + str(D2))
     v = -1
     for key in D2:
         if D2[key] == x:
             v = key
-    print v
-    print "x is: " + str(x)
-    print T
-    print n-1
+    print(v)
+    print("x is: " + str(x))
+    print(T)
+    print(n-1)
     if T[n-1] == 0:
         T[n-1] = [0]*n
-    for extension in xrange(n-len(T[n-1])+1):
+    for extension in range(n-len(T[n-1])+1):
         T[n-1].append(0)
-    print T
+    print(T)
     if (v==-1):
         v = n
     T[n-1][v] = limbLength
     if T[v] == 0:
         T[v] = [0]*n
-    for extension in xrange(n-len(T[v])):
+    for extension in range(n-len(T[v])):
         T[v].append(0)
     T[v][n-1] = limbLength
-    print T
+    print(T)
     return T
 
 def BFS2(tree,leaf):
@@ -165,7 +165,7 @@ def BFS2(tree,leaf):
     visitedDict[leaf]=0
     while len(queue) != 0:
         current = queue.pop(0)
-        for v in xrange(len(tree.get(current))):
+        for v in range(len(tree.get(current))):
             if v not in seen:
                 seen += [v]
                 queue += [v]
@@ -177,15 +177,15 @@ def additivePhylogenyWrapper(fileName):
     contents = open(fileName).readlines()
     n = int(contents.pop(0).strip())
     distanceDict = defaultdict(int)
-    for i in xrange(n):
+    for i in range(n):
         distanceDict[i] = [0]*n
-    for j in xrange(len(contents)):
+    for j in range(len(contents)):
         current = map(int, contents[j].split())
-        for i in xrange(len(current)):
+        for i in range(len(current)):
             distanceDict[i][j]=current[i]
     finalDict = {}
     treeDict = additivePhylogeny(n,distanceDict,finalDict)
-    print str(treeDict)
+    print(str(treeDict))
     '''fout = open("texts/hw8/additivePhylogenyAnswer.txt","wt")
     output = ""
     for key in treeDict:
